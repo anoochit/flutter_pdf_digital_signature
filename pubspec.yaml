@@ -1,0 +1,29 @@
+name: onlysign
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: ">=2.18.4 <3.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  get: 4.6.5
+  intl: ^0.17.0
+  path_provider: ^2.0.0
+  share_plus: ^6.2.0
+  syncfusion_flutter_pdf: ^20.3.56
+  syncfusion_flutter_pdfviewer: ^20.3.56
+  syncfusion_flutter_signaturepad: ^20.3.56
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/pdf/sample.pdf
+    - assets/certificate/certificate.pfx
