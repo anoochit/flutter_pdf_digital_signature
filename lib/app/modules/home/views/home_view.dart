@@ -22,7 +22,7 @@ class HomeView extends GetView<HomeController> {
             leading: const Icon(Icons.description),
             title: Text(listSampleDocument[index].title),
             subtitle: Text(DateFormat("dd MMM yyy HH:mm:ss").format(listSampleDocument[index].created)),
-            onTap: () => Get.toNamed(Routes.VIEW_DOCUMENT, arguments: listSampleDocument[index].file),
+            onTap: () => Get.toNamed(Routes.VIEW_DOCUMENT, arguments: listSampleDocument[index]),
           );
         },
       ),

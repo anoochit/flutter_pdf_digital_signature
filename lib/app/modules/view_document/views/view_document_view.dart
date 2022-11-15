@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:onlysign/app/data/model/document_model.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
@@ -9,7 +10,7 @@ import '../controllers/view_document_controller.dart';
 class ViewDocumentView extends GetView<ViewDocumentController> {
   ViewDocumentView({Key? key}) : super(key: key);
 
-  final String file = Get.arguments;
+  final DocumentModel doc = Get.arguments;
 
   final GlobalKey<SfSignaturePadState> signaturePadGlobalKey = GlobalKey();
 
@@ -44,7 +45,7 @@ class ViewDocumentView extends GetView<ViewDocumentController> {
             Expanded(
               child: (controller.signedDocument == null)
                   ? SfPdfViewer.asset(
-                      file,
+                      doc.file,
                       enableDoubleTapZooming: true,
                     )
                   : SfPdfViewer.memory(controller.signedDocument!),
@@ -92,7 +93,7 @@ class ViewDocumentView extends GetView<ViewDocumentController> {
                                 );
                                 // build signature image
                                 await controller.signAndSaveDocument(
-                                  orginalFile: file,
+                                  sourceDocument: doc,
                                   signaturePadGlobalKey: signaturePadGlobalKey,
                                 );
                               },

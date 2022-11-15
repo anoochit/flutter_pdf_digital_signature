@@ -1,10 +1,10 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:onlysign/app/data/model/document_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
@@ -40,7 +40,7 @@ class ViewDocumentController extends GetxController {
   }
 
   Future<void> signAndSaveDocument(
-      {required GlobalKey<SfSignaturePadState> signaturePadGlobalKey, required String orginalFile}) async {
+      {required GlobalKey<SfSignaturePadState> signaturePadGlobalKey, required DocumentModel sourceDocument}) async {
     final image = await signaturePadGlobalKey.currentState!.toImage(pixelRatio: 3.0);
     final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
 
@@ -49,7 +49,7 @@ class ViewDocumentController extends GetxController {
     final Uint8List certificateBytes = certBytes.buffer.asUint8List();
 
     // load pdf document
-    final ByteData docBytes = await rootBundle.load(orginalFile);
+    final ByteData docBytes = await rootBundle.load(sourceDocument.file);
     final Uint8List documentBytes = docBytes.buffer.asUint8List();
 
     // create new pdf document
@@ -93,7 +93,7 @@ class ViewDocumentController extends GetxController {
     // save document
     final directory = await getApplicationSupportDirectory();
     final path = directory.path;
-    File file = File('$path/output.pdf');
+    File file = File('$path/${sourceDocument.id}_output.pdf');
     await file.writeAsBytes(signedDocumentByte!, flush: true);
 
     // set signed doc to pdf viewer
