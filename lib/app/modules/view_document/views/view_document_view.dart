@@ -24,7 +24,7 @@ class ViewDocumentView extends GetView<ViewDocumentController> {
                 ? IconButton(
                     onPressed: () async {
                       // save document
-                      await controller.shareDocument(byte: controller.signedDocumentByte);
+                      await controller.shareDocument();
                     },
                     icon: const Icon(Icons.share),
                   )
@@ -60,6 +60,9 @@ class ViewDocumentView extends GetView<ViewDocumentController> {
                       ),
                       SfSignaturePad(
                         key: signaturePadGlobalKey,
+                        maximumStrokeWidth: 5.0,
+                        minimumStrokeWidth: 3.0,
+                        strokeColor: Color.fromARGB(255, 15, 22, 112),
                       ),
                       Container(
                         color: Colors.white,
@@ -74,8 +77,16 @@ class ViewDocumentView extends GetView<ViewDocumentController> {
                                   context: context,
                                   barrierDismissible: false,
                                   builder: (context) {
-                                    return const AlertDialog(
-                                      content: Text("Signing..."),
+                                    return AlertDialog(
+                                      content: Row(
+                                        children: const [
+                                          CircularProgressIndicator(),
+                                          SizedBox(
+                                            width: 16.0,
+                                          ),
+                                          Text("Signing..."),
+                                        ],
+                                      ),
                                     );
                                   },
                                 );

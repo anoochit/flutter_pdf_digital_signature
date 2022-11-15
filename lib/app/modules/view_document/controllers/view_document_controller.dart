@@ -31,12 +31,10 @@ class ViewDocumentController extends GetxController {
     super.onClose();
   }
 
-  Future<void> shareDocument({List<int>? byte}) async {
-    // save document
+  Future<void> shareDocument() async {
+    // get document
     final directory = await getApplicationSupportDirectory();
     final path = directory.path;
-    File file = File('$path/output.pdf');
-    await file.writeAsBytes(byte!, flush: true);
     // share document
     Share.shareXFiles([XFile('$path/output.pdf')]);
   }
@@ -57,7 +55,7 @@ class ViewDocumentController extends GetxController {
     // create new pdf document
     PdfDocument document = PdfDocument(inputBytes: documentBytes);
 
-    // goto first page
+    // goto last page
     int pageCount = document.pages.count;
     PdfPage page = document.pages[pageCount - 1];
 
@@ -91,6 +89,14 @@ class ViewDocumentController extends GetxController {
 
     // build a signed pdf document
     signedDocumentByte = await document.save();
+
+    // save document
+    final directory = await getApplicationSupportDirectory();
+    final path = directory.path;
+    File file = File('$path/output.pdf');
+    await file.writeAsBytes(signedDocumentByte!, flush: true);
+
+    // set signed doc to pdf viewer
     signedDocument = Uint8List.fromList(signedDocumentByte!);
     document.dispose();
 
