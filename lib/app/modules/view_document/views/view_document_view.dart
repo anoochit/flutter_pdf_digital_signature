@@ -25,7 +25,7 @@ class ViewDocumentView extends GetView<ViewDocumentController> {
                 ? IconButton(
                     onPressed: () async {
                       // save document
-                      await controller.shareDocument();
+                      await controller.shareDocument(sourceDocument: doc);
                     },
                     icon: const Icon(Icons.share),
                   )

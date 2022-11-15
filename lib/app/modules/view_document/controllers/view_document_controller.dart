@@ -31,12 +31,12 @@ class ViewDocumentController extends GetxController {
     super.onClose();
   }
 
-  Future<void> shareDocument() async {
+  Future<void> shareDocument({required DocumentModel sourceDocument}) async {
     // get document
     final directory = await getApplicationSupportDirectory();
     final path = directory.path;
     // share document
-    Share.shareXFiles([XFile('$path/output.pdf')]);
+    Share.shareXFiles([XFile('$path/${sourceDocument.id}_output.pdf')]);
   }
 
   Future<void> signAndSaveDocument(
